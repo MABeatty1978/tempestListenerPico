@@ -34,8 +34,7 @@ try:
         d = json.loads(data)
     
         
-        if d['type'] == "obs_st":
-            
+        if d['type'] == "obs_st": 
             print("Time Epoch: " + str(d['obs'][0][0]) + " seconds")
             print("Wind Lull m/s: " + str(d['obs'][0][1]) + " m/s")
             print("Wind Avg m/s: " + str(d['obs'][0][2]) + " m/s")
@@ -55,8 +54,15 @@ try:
             print("Battery: "  + str(d['obs'][0][16]) + " volts")
             print("Report Interval: " + str(d['obs'][0][17]) + " minutes")
             print()
-        
-            
+        elif d['type'] == "evt_strike":
+            #Lighting Strike detected
+            print("Time Epoch: " + str(d['evt'][0]) + " seconds")
+            print("Distance: " + str(d['evt'][1]) + " km")
+            print("Energy: " + str(d['evt'][2]))
+            print()
+        elif d['type'] == "evt_precip":
+            print("Rain event started time epoch: " + str(d['evt'][0]) + " seconds")
+            print()
             
               
 except KeyboardInterrupt:
