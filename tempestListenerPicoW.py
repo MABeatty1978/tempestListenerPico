@@ -4,6 +4,7 @@ import select
 import json
 import time
 import config
+import time
 
 ssid = config.SSID
 password = config.PASSWD
@@ -13,6 +14,7 @@ def connect():
     wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
     wlan.connect(ssid, password)
+    
     while wlan.isconnected() == False:
         print('Waiting for connection...')
         time.sleep(1)
@@ -34,8 +36,10 @@ try:
         d = json.loads(data)
     
         
-        if d['type'] == "obs_st": 
-            print("Time Epoch: " + str(d['obs'][0][0]) + " seconds")
+        if d['type'] == "obs_st":
+            t = time.localtime(d['obs'][0][0])
+            t = (str(t[1]) + "/" + str(t[2]) + "/" + str(t[0]) + " " + str(t[3]) + ":" + str(t[4]) + ":" + str(t[5]) + ":" + str(t[6]))
+            print("Time Epoch: " + str(d['obs'][0][0]) + " seconds" + " - " + t)
             print("Wind Lull m/s: " + str(d['obs'][0][1]) + " m/s")
             print("Wind Avg m/s: " + str(d['obs'][0][2]) + " m/s")
             print("Wind Gust m/s: " + str(d['obs'][0][3]) + " m/s")
